@@ -1,6 +1,6 @@
 #include <stdio.h>
 
-#include "notes.h"
+#include "interval.h"
 
 int main(void) {
   enum Note start_note = Note_C;

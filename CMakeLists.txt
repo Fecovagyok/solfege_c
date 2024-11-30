@@ -17,5 +17,11 @@ set(CMAKE_C_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -g -O0")
 message("CMAKE_C_FLAGS_DEBUG is ${CMAKE_C_FLAGS_DEBUG}")
 message("CMAKE_C_FLAGS_RELEASE is ${CMAKE_C_FLAGS_RELEASE}")
 
-add_executable(solfege src/main.c src/notes.c)
+add_executable(solfege
+  src/main.c
+  src/notes.c
+  src/interval.c
+  src/chromatic.c
+  src/white_note.c
+)
 target_include_directories(solfege PRIVATE include)
