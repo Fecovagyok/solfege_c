@@ -18,17 +18,6 @@ static enum Note bases[] = {NOTE_RELATIONS};
 
 enum Note note_base_of(enum Note note) { return bases[note]; }
 
-#define DEFINE_ACCIDENTAL_ARRAY(flat_or_sharp)                              \
-  static enum Note flat_or_sharp##s[] = {                                   \
-      [Note_C] = Note_C_##flat_or_sharp, [Note_D] = Note_D_##flat_or_sharp, \
-      [Note_E] = Note_E_##flat_or_sharp, [Note_F] = Note_F_##flat_or_sharp, \
-      [Note_G] = Note_G_##flat_or_sharp, [Note_A] = Note_A_##flat_or_sharp, \
-      [Note_H] = Note_H_##flat_or_sharp,                                    \
-  }
-
-DEFINE_ACCIDENTAL_ARRAY(sharp);
-DEFINE_ACCIDENTAL_ARRAY(flat);
-
 #define CHROMATIC_SCALE_RELATION \
   X(C, C)                        \
   X(C_sharp, D_flat)             \
@@ -59,15 +48,6 @@ enum Chromatic_type note_to_chromatic(enum Note note) {
   return note_to_chrom_array[note];
 }
 
-// #define X(chrom, alias) TO_CHROMATIC_ENUM(chrom),
-// static enum Chromatic_type chromatic_scale[] = {CHROMATIC_SCALE_RELATION};
-// #undef X
-
-enum Direction {
-  Dir_Downward = -1,
-  Dir_Upward = 1,
-};
-
 uint32_t chromatic_calc_distance(enum Chromatic_type first,
                                  enum Chromatic_type second) {
   if (second < first) {
@@ -92,7 +72,7 @@ static unsigned int interval_full_steps[] = {INTERVAL_RELATIONS};
 
 #define TO_WHITE_NOTE_ENUM(white_note) White_note_##white_note
 
-#define X(white_note) TO_WHITE_NOTE_ENUM(white_note)
+#define X(white_note) TO_WHITE_NOTE_ENUM(white_note),
 enum White_note { WHITE_NOTE_RELATIONS };
 #undef X
 
@@ -123,8 +103,22 @@ enum Note white_note_to_note(enum White_note note) {
   return white_note_to_note_array[note];
 }
 
-enum Note note_sharp_of(enum Note note) { return sharps[note]; }
-enum Note note_flat_of(enum Note note) { return flats[note]; }
+#define X(white_note) \
+  [TO_WHITE_NOTE_ENUM(white_note)] = TO_NOTE_ENUM(white_note##_sharp),
+enum Note white_note_to_sharp_array[] = {WHITE_NOTE_RELATIONS};
+#undef X
+
+#define X(white_note) \
+  [TO_WHITE_NOTE_ENUM(white_note)] = TO_NOTE_ENUM(white_note##_flat),
+enum Note white_note_to_flat_array[] = {WHITE_NOTE_RELATIONS};
+#undef X
+
+enum Note white_note_sharp_of(enum White_note note) {
+  return white_note_to_sharp_array[note];
+}
+enum Note white_note_flat_of(enum White_note note) {
+  return white_note_to_flat_array[note];
+}
 
 enum White_note white_note_for_full_step_of(enum Note base,
                                             enum Interval interval) {
@@ -132,12 +126,13 @@ enum White_note white_note_for_full_step_of(enum Note base,
   return (non_accidental + interval_full_steps[interval]) % 8;
 }
 
-enum Note up_the_game(enum White_note note) { return }
-
 enum Note note_interval(enum Note base, enum Interval interval) {
   enum White_note new_base = white_note_for_full_step_of(base, interval);
   uint32_t distance = chromatic_calc_distance(
       note_to_chromatic(base), white_note_to_chromatic(new_base));
   if (distance == interval) return white_note_to_note(new_base);
-  if (distance < interval) return
+  if (distance < interval)
+    return white_note_sharp_of(new_base);
+  else
+    return white_note_flat_of(new_base);
 }

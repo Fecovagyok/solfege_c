@@ -51,4 +51,6 @@ const char* note_to_string(enum Note);
 enum Interval { INTERVAL_RELATIONS };
 #undef X
 
+enum Note note_interval(enum Note base, enum Interval interval);
+const char* note_to_string(enum Note note);
 #endif
