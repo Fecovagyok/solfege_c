@@ -7,7 +7,7 @@
 #define NOTE_RELATIONS   \
   X(C, C, C)             \
   X(C_sharp, C, C_sharp) \
-  X(C_flat, C, H)        \
+  X(C_flat, C, B)        \
   X(D, D, D)             \
   X(D_sharp, D, D_sharp) \
   X(D_flat, D, C_sharp)  \
