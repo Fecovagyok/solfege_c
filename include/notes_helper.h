@@ -19,8 +19,8 @@
   X(G, G)                        \
   X(G_sharp, A_flat)             \
   X(A, A)                        \
-  X(A_sharp, B)                  \
-  X(H, C_flat)
+  X(A_sharp, B_flat)             \
+  X(B, C_flat)
 
 #define TO_CHROMATIC_ENUM(chrom) Chromatic_##chrom
 
@@ -44,7 +44,7 @@ enum Chromatic_type note_to_chromatic(enum Note note);
   X(F)                       \
   X(G)                       \
   X(A)                       \
-  X(H)
+  X(B)
 
 #define TO_WHITE_NOTE_ENUM(white_note) White_note_##white_note
 

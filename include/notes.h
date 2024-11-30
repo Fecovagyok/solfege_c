@@ -23,9 +23,9 @@
   X(A, A, A)             \
   X(A_sharp, A, A_sharp) \
   X(A_flat, A, G_sharp)  \
-  X(H, H, H)             \
-  X(H_sharp, H, C)       \
-  X(B, H, A_sharp)
+  X(B, B, B)             \
+  X(B_sharp, B, C)       \
+  X(B_flat, B, A_sharp)
 
 #define TO_NOTE_ENUM(raw_note) Note_##raw_note
 
@@ -34,7 +34,5 @@ enum Note { NOTE_RELATIONS };
 #undef X
 
 const char* note_to_string(enum Note);
-
-#define Note_H_flat Note_B
 
 #endif
