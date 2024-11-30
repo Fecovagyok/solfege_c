@@ -1,8 +1,6 @@
 #include "notes.h"
 
 #include <stdint.h>
-#include <stdio.h>
-#include <stdlib.h>
 
 #define X(e_note, base, chrom) [TO_NOTE_ENUM(e_note)] = #e_note,
 static const char* const note_strings_array[] = {NOTE_RELATIONS};
